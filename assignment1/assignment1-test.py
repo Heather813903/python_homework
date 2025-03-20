@@ -1,7 +1,7 @@
 import assignment1 as a1
 
 def test_hello():
-    assert a1.hello() == "Hello!"
+    assert a1.say_hello() == "Hello!"
 
 def test_greet():
     assert a1.greet("James") == "Hello, James!"
@@ -15,11 +15,11 @@ def test_calc():
     assert a1.calc(9,5, "modulo") == 4
     assert a1.calc(10,0,"divide") == "You can't divide by 0!"
     assert a1.calc("first", "second", "multiply") == "You can't multiply those values!"
-
+    
 def test_data_type_conversion():
     result = a1.data_type_conversion("110", "int")
     assert type(result).__name__ == "int"
-    assert result == 110
+    assert result == 110   
     result = a1.data_type_conversion("5.5", "float")
     assert type(result).__name__ == "float"
     assert result == 5.5
