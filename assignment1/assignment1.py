@@ -138,9 +138,9 @@ print(hangman("difficulty", "ic"))
 def pig_latin(phrase):
    def convert_word(word):
    #if the str starts with a vowel
-      vowels = ("aeiou")
-      if word[0] == vowels:
-         return ("word" + "ay")
+      vowels = 'aeiou'
+      if word[0] in vowels:
+         return word + "ay"
    #if the str starts with a consonant
       elif word[:2] == "qu":
          return word[2:] + "quay"
@@ -154,6 +154,9 @@ def pig_latin(phrase):
    return " ".join(converted_words)
    
 english_sentence = "apple"
+english_sentence = "banana"
+english_sentence = "cherry"
+
 print(pig_latin(english_sentence))
 
    
