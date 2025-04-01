@@ -1,0 +1,131 @@
+import sqlite3
+
+def pause():
+    input("\nPress Enter to continue...\n")
+
+#connect to db
+with sqlite3.connect("../db/company.db") as conn:
+    conn.execute("PRAGMA foreign_keys = 1")
+    cursor = conn.cursor()
+
+
+#create tables
+cursor.execute("DROP TABLE IF EXISTS Employees")
+cursor.execute("DROP TABLE IF EXISTS Projects")
+
+
+
+cursor.execute("""
+    CREATE TABLE Employees (
+        employee_id INTEGER PRIMARY KEY,
+        name TEXT NOT NULL,
+        department TEXT NULL,
+        salary REAL 
+)
+""")
+
+
+cursor.execute("""
+    CREATE TABLE Projects (
+        id INTEGER PRIMARY KEY,
+        name TEXT NOT NULL,
+        department TEXT NOT NULL
+      
+)
+""")
+
+
+cursor.executemany("INSERT INTO Employees (name, department, salary) VALUES (?, ?, ?)",[
+    ('Alice', 'HR', 72000),
+    ('Bob', 'IT', 82000),
+    ('Charlie', 'HR', 68000),
+    ('Dana', 'Finance', 95000),
+    ('Eli', 'IT', 75000)
+])
+
+cursor.executemany("INSERT INTO Projects (name, department) VALUES (?, ?)",[
+    ('Project A', 'HR'),
+    ('Project B', 'IT'),
+    ('Project C', 'Finance')
+])
+
+conn.commit()
+
+print("== Subquery: Highest paid employee in each department ==")
+cursor.execute("""
+    SELECT department, name, salary
+    FROM Employees AS e
+    WHERE salary = (
+        SELECT MAX (salary)
+        FROM Employees
+        WHERE department = e.department
+)
+""")
+
+print(cursor.fetchall())
+pause()
+
+# employees working on project A
+print("== INNER JOIN: Employees working on Project A ==")
+cursor.execute("""
+    SELECT Employees.name, Projects.name AS project_name
+    FROM Employees
+    INNER JOIN Projects ON Employees.department = Projects.department
+    WHERE Projects.name = 'Project A'
+               
+""")
+print(cursor.fetchall())
+pause()
+
+print("== LEFT JOIN: All employees and their projects (if any) ==")
+cursor.execute("""
+    SELECT Employees.name, Projects.name AS project_name
+    FROM Employees
+    LEFT JOIN Projects ON Employees.department = Projects.department
+               
+""")
+print(cursor.fetchall())
+pause()
+
+print("== GROUP BY + Aggregation: Salary stats per department ==")
+cursor.execute("""
+    SELECT department,
+        COUNT(*) AS num_employees,
+        ROUND(AVG(salary),2) AS avg_salary,
+        SUM(salary) AS total_salary,
+        MIN(salary) AS lowest_salary,
+        MAX(salary) AS highest_salary
+    FROM Employees
+    GROUP BY department
+""")
+print(cursor.fetchall())
+pause()
+
+print("==HAVING: Departments with avg salary > 70k ==")
+cursor.execute("""
+    SELECT department,
+        COUNT(*) AS num_employees,
+        ROUND(AVG(salary), 2) AS avg_salary,
+        SUM(salary) AS total_salary
+    FROM Employees
+    GROUP BY department
+    HAVING avg_salary > 70000
+    
+""")
+print(cursor.fetchall())
+pause()
+
+print("== WHERE filters raw rows; HAVING filters grouped results ==")
+cursor.execute("""
+    SELECT department,
+        COUNT(*) AS num_employees,
+        ROUND(AVG(salary), 2) AS avg_salary,
+        SUM(salary) AS total_salary
+    FROM Employees
+    WHERE salary > 50000
+    GROUP BY department
+    HAVING avg_salary > 70000
+
+""")
+print(cursor.fetchall())
+pause()
