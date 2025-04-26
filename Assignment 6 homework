@@ -150,3 +150,6 @@ bins = [0, 30, 60, 100]
 labels = ['Young', 'Middle-Aged', 'Old']
 df['Age_Group'] = pd.cut(df['Age'], bins=bins, labels=labels)
 print(df)
+
+
+pip install pyreadline3
