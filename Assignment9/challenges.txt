@@ -1,0 +1,3 @@
+This assignment was actually pretty fun for the most part. My challenges included finding the correct data and figuring out how to extract them. 
+I still feel as if there is a better way to scrape the data, but this way worked, so I went with it.  I utilized W3schools and basically toyed around 
+until I found the desired result.

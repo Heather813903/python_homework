@@ -1,0 +1,9 @@
+#Task 5
+
+2a. Restricted sections:
+    UbiCrawler, DOC, Zao
+
+2b. Yes, there are certain rules that pertain to specific user agents (i.e. disallow fast requests, use wait options)
+
+3.  Websites uses robots.text to communicate with web crawlers to inform them of the parts of thier site that should not be accessed.  This helps protect
+    sensitive content and prevents strain on thier servers. The site sets these boundaries in the hopes the crawlers interact responsibly.
