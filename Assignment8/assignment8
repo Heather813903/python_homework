@@ -35,7 +35,8 @@ def setup_database(cursor):
     CREATE TABLE IF NOT EXISTS customers(
         customer_id INTEGER PRIMARY KEY,
         customer_name TEXT NOT NULL
-)
+        
+    )
 """)
     
     cursor.execute("""
@@ -249,8 +250,8 @@ def employees_with_more_than_5_orders(cursor):
     print("\nTask 4: Employees With More Than 5 Orders")
     print("Employee ID | First Name | Last Name | Order Count")
     print("----------------------------------------------------")
-    for emp_id, first_name, last_name, count in results:
-        print(f"{emp_id:<11} | {first_name:<10} | {last_name:<9} {count}")
+    for row in results:
+        print(f"ID: {row[0]}, First Name: {row[1]}, Last Name: {row[2]}, Orders: {row[3]}")
 
 def main():
     conn = sqlite3.connect("company.db")
