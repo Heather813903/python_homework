@@ -1,0 +1,155 @@
+import re
+import pandas as pd
+
+gmail = re.compile(r'(\w+[\w\d\.\-]*)@gmail.com')
+search_target = 'Boa-Dreamcode.public@gmail.com'
+match = gmail.match(search_target)
+print(match.group())
+print(match.group(1))
+search_target = 'My email is Boa_Dreamcode.public@gmail.com, what is yours?'
+match = gmail.search(search_target)
+print(match.group())
+print(match.group(1))
+
+import pandas as pd
+
+df = pd.DataFrame({
+   'phone_number': ['(123) 456-7890', '+1-555-123-4567', '555-456.7890'] 
+})
+print(df)
+df['phone_number-clean'] = df['phone_number'].str.replace(r'\D','',regex=True)
+print(df)  
+
+df = pd.DataFrame({
+    'html_content': [
+        '<p>This is a paragraph.</p>',
+        '<div>Some <strong>bold</strong> text</div>'
+    ]
+})
+df['text_only'] = df['html_content'].str.replace(r'<.*?', '', regex=True)
+print(df)
+
+df = pd.DataFrame({
+    'email' : [
+        'john.doe@example.com',
+        'jane_smith@my-domain.org',
+        'user123@anotherdomain.net'
+
+    ]
+    })
+df ['domain'] = df['email'].str.extract(r'@(\w+[\w\.-]+)')
+
+print(df)
+
+series = pd.Series(['Tom-25-USA', 'Anna-30-UK', 'John-22-Canada'])
+pattern = r'(?P<Name>\w+)-(?P<Age>\d+)-(?P<Country>\w+)'
+result = series.str.extract(pattern)
+print(result)
+
+df = pd.DataFrame({
+    'email': ['test@example.com', 'invalid-email', 'hello@mydomain.org']
+})
+valid_emails = df[df['email'].str.contains(r'^\w+[\w\.-]+@\w+[\w\.-]+\.\w+$')]
+print(valid_emails)
+
+orders = [
+    "Order 1: 2x Cheddar, 1x Gouda",
+    "Order 2: 3x Stilton, 2x Rye Crackers",
+    "Order 3: 2x Saltines",
+    "Order 4: 1x Camembert, 2x Jahrlsberg",
+    "Order 5: 2x Gouda, 2x Rye Crackers",
+    "Order 6: 1x Ritz, 1x Jahrlsberg",
+    "Order 7: 1x Parmesan, 1x Brie",
+    "Order 8: 3x Saltine Crackers",
+    "Order 9: 2x Rye Crackers",
+    "Order 10: 2x Mozzarella, 1x Cheddar",
+    "Order 11: 1X Water Crackers"
+    "Order 12: 3x Blue Cheese",
+    "Order 13: 1x Triscuits",
+    "Order 14: 1x Butter Crackers, 2x Multigrain Crackers",
+    "Order 15: 1x Feta",
+    "Order 16: 1x Havarti",
+    "Order 17: 2x Wheat Crackers",
+    "Order 18: 1x Ricotta",
+    "Order 19: 1x Garlic Herb Crackers"
+]
+
+orders = pd.Series(orders)
+favored_cheeses = orders.str.contains(r'Cheddar|'
+                                      r'Stilton|'
+                                      r'Camebert|'
+                                      r'Jahrlsberg|'
+                                      r'Gouda', case=False, regex=True
+)
+favored_crackers = orders.str.contains(r'Ritz|'
+                                       r'Triscuit|'
+                                       r'Rye Crackers|'
+                                       r'Multigrain Crackers|'
+                                       r'Water Crackers', case=False, regex=True
+                                       
+)  
+print(orders[favored_cheeses| favored_crackers])    
+print(orders[favored_cheeses & favored_crackers])  
+print(orders[~favored_cheeses])                              
+
+df = pd.DataFrame({
+    'col_2021':[1,2,3],
+    'col_2022':[4,5,6],
+    'col_other':[7,8,9]
+
+
+})
+
+df_year = df.filter(regex=r'\d+$')
+print(df_year)
+
+data = {'Name': ['Alice', 'Bob', 'Alice', 'David'],
+        'Age': [24, 27, 24, 35],
+        'Salary':[50000, 60000, 50000, 80000]        
+}
+df = pd.DataFrame(data)
+
+df_no_duplicates = df.drop_duplicates()
+print("DataFrame with duplicates removed:")
+print(df_no_duplicates)
+
+df['Age'] = df['Age'].apply(lambda x: df['Age'].median() if x > 100 or x < 0 else x)
+print("DataFrame after handling outliers:")
+print(df)
+
+df['Name'] = df['Name'].str.lower().str.strip()
+
+
+print ("Stadardized DataFrame:")
+print(df)
+
+data = {'Color': ['Red', 'Blue', 'Green', 'Blue', 'Red']}
+df =pd.DataFrame(data)
+
+df['Color_Label'] = df['Color'].map({'Red':1, 'Blue':2,'Green':3})
+
+df_encoded = pd.get_dummies(df['Color'], prefix='Color')
+
+print("DataFrame with Categorical Data Handled:")
+print(df_encoded)
+
+import re
+
+data = {'City':['New York', 'new york', 'San Francisco', 'San fran']}
+df = pd.DataFrame(data)
+
+df['City'] = df['City'].str.lower().str.strip()
+df["City"] = df['City'].replace({'san fran': 'San Francisco'})
+
+print(df)
+
+data = {'Age': [24, 35, 30, 45, 60]}
+df = pd.DataFrame(data)
+
+bins = [0, 30, 60, 100]
+labels = ['Young', 'Middle-Aged', 'Old']
+df['Age_Group'] = pd.cut(df['Age'], bins=bins, labels=labels)
+print(df)
+
+
+pip install pyreadline3

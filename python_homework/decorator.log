@@ -1,0 +1,12 @@
+function: say_hello
+positional parameters:none
+keyword parameters:none
+return:None
+function: accepts_positional_args
+positional parameters:[1, 2, 3, 4]
+keyword parameters:none
+return:True
+function: accepts_keyword_args
+positional parameters:none
+keyword parameters:{'a': 1, 'b': 2, 'c': 'test'}
+return:<function logger_decorator at 0x000001884DBFF420>

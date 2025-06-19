@@ -3,7 +3,7 @@
 import sqlite3
 import pandas as pd
 
-with sqlite3.connect("../db/lesson.db") as conn:
+with sqlite3.connect("./db/lesson.db") as conn:
     cursor = conn.cursor()
     sql_statement = """
     SELECT
