@@ -4,8 +4,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import sqlite3
 
+import os
+print("Looking for DB at:", os.path.abspath("../db/lesson.db"))
+print("Exists:", os.path.exists("../db/lesson.db"))
+
 #Connect to db
-conn = sqlite3.connect("./db/lesson.db")
+conn = sqlite3.connect("../db/lesson.db")
 
 
 #SQL query
@@ -31,3 +35,4 @@ plt.ylabel("Revenue ($)")
 plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()
+
